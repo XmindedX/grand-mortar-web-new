@@ -2,26 +2,15 @@
 
 import * as React from "react"
 import {
-  Calendar,
-  Inbox, 
-  Search, 
-  Settings,
   Gauge,
-  ChartNoAxesCombined,
-  LayoutDashboard,
   ShoppingBasket,
   List,
-  LogOut,
-  CirclePlus,
   Receipt,
   ReceiptText,
 } from "lucide-react"
 
 import Image from "next/image"
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
@@ -32,7 +21,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar"
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from "next/link"
-import { z, ZodType } from "zod";
+import { ZodType } from "zod";
 import {
   FieldValues,
   SubmitHandler,
@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,7 +26,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { toast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { is } from 'drizzle-orm';
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
