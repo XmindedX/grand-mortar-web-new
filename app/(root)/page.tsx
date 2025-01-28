@@ -13,7 +13,7 @@ import {
 interface AnalyticsCardProps {
   title: string;
   value: string;
-  icon: any;
+  icon: React.ElementType;
   color: string;
 }
   
