@@ -6,33 +6,28 @@ import { eq } from "drizzle-orm";
 import { hash } from "bcryptjs";
 import { signIn } from "@/auth";
 
-export const signInWithCredentials = async (params: Pick<AuthCredentials, "email" | "password">
-) => {
+export const signInWithCredentials = async (
+    params: Pick<AuthCredentials, "email" | "password">,
+  ) => {
     const { email, password } = params;
-
-    try{
-        const result = await signIn("credentials", {
-            email,
-            password,
-            redirect: false,
-        });
-
-        if (result?.error) {
-            return {
-                success: false,
-                error: result.error,
-            }
-        }
-        
-        return {
-            success: true,
-        }
+  
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+  
+      if (result?.error) {
+        return { success: false, error: result.error };
+      }
+  
+      return { success: true };
+    } catch (error) {
+      console.log(error, "Signin error");
+      return { success: false, error: "Signin error" };
     }
-
-    catch (error) {
-        console.log(error, "SignIn Error");
-    }
-}
+  };
 
 export const signUp = async (params: AuthCredentials) => {
     const { name, email, password } = params;
