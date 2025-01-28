@@ -9,8 +9,15 @@ import { Separator } from "@/components/ui/separator"
 import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+
+interface AnalyticsCardProps {
+  title: string;
+  value: string;
+  icon: any;
+  color: string;
+}
   
-const AnalyticsCard = ({ title, value, icon: Icon, color }) => (
+const AnalyticsCard = ({ title, value, icon: Icon, color }: AnalyticsCardProps) => (
 	<div
 		className={`bg-gray-800 rounded-lg p-6 shadow-lg overflow-hidden relative ${color}`}
 	>
