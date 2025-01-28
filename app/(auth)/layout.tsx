@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
+import Image from 'next/image'
 
 const layout = async ({ children }: { children: ReactNode }) => {
 
@@ -19,7 +20,12 @@ const layout = async ({ children }: { children: ReactNode }) => {
                         <CardHeader className="text-center">
                         <CardTitle className=" font-bold items-center justify-center font-sans">
                             <div className="text-4xl font-bold flex items-center justify-center font-sans gap-1">
-                            <img src="./logo.png" alt="" className="w-12 h-12 mt-1" />
+                            <Image
+                            src="/logo.png"
+                            alt="logo"
+                            width={40}
+                            height={40}
+                            />
                             <p className="text-red-600">Grand</p>
                             <p className="text-blue-600">Mortar</p>
                             </div>
