@@ -1,4 +1,5 @@
-import { useForm, useFieldArray } from "react-hook-form";
+"use client"
+import { useFieldArray, useForm } from "react-hook-form";
 import React from "react";
 import { cn } from "@/lib/utils"
 import { Button } from '@/components/ui/button'
