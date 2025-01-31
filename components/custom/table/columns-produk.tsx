@@ -1,19 +1,8 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { ColumnDef, useReactTable } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal, MoveDown, MoveUp } from 'lucide-react'
-import Image from 'next/image'
+import { ColumnDef } from '@tanstack/react-table'
+import { MoveDown, MoveUp } from 'lucide-react'
 import { IKImage } from "imagekitio-next";
 import { deleteProduct } from '@/lib/actions/product';
 import config from "@/lib/config";
