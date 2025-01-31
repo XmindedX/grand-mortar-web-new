@@ -378,7 +378,7 @@ const page = () => {
                                 Export
                             </Button>
                         </Link>
-                        <Link href="/" target="_blank">
+                        <Link href="/daftar-pesanan/new">
                             <Button
                             variant={'default'}
                             size ={'sm'}

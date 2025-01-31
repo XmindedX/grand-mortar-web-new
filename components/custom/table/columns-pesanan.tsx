@@ -104,7 +104,7 @@ export const columns: ColumnDef<ITable>[] = [
                             className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
                         />
                     </span>
-                    Category
+                    Total Harga
                 </button>
             )
         },
@@ -132,7 +132,7 @@ export const columns: ColumnDef<ITable>[] = [
                             className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
                         />
                     </span>
-                    Location
+                    Kurang Bayar
                 </button>
             )
         },
@@ -160,7 +160,7 @@ export const columns: ColumnDef<ITable>[] = [
                             className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
                         />
                     </span>
-                    Date
+                    Tanggal Pemesanan
                 </button>
             )
         },
