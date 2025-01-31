@@ -94,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild
-                  size="default"
+                  size="md"
                   className="data-[active=true]:bg-sidebar-blue-500 data-[active=true]:text-sidebar-white"
                   >
                     <a href={item.url}>

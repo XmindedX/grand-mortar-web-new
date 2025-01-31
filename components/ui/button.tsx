@@ -19,12 +19,19 @@ const buttonVariants = cva(
           "bg-slate-100 text-slate-900 shadow-sm hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
         ghost: "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         link: "text-slate-900 underline-offset-4 hover:underline dark:text-slate-50",
+        'outline-black':
+          'ring-1 ring-inset ring-black bg-white shadow-sm text-black hover:bg-gray-200',
+        'outline-general':
+          'ring-1 ring-inset ring-gray-300 bg-white shadow-sm text-black hover:bg-gray-200',
+        black: 'bg-black text-white hover:bg-[#3C3C3D]',
       },
       size: {
         default: "h-9 px-4 py-2",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
+        large: 'py-2 px-3 text-sm',
+        extralarge: 'font-semibold [&>svg]:size-[18px] rounded-[10px] text-sm py-[11px] px-3.5',
       },
     },
     defaultVariants: {

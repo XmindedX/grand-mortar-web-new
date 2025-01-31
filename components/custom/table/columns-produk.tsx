@@ -1,0 +1,159 @@
+'use client'
+
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { ColumnDef, useReactTable } from '@tanstack/react-table'
+import { ArrowUpDown, MoreHorizontal, MoveDown, MoveUp } from 'lucide-react'
+import Image from 'next/image'
+import { IKImage } from "imagekitio-next";
+import { deleteProduct } from '@/lib/actions/product';
+import config from "@/lib/config";
+
+export type ITable = {
+    id: string,
+    title: string,
+    price: number,
+    stock: number,
+    image: string,
+}
+
+export const columns: ColumnDef<ITable>[] = [
+    
+    {
+        accessorKey: 'image',
+        header: ({ table }) => (
+            <div></div>
+        ),
+        cell: ({ row }) => (
+            
+            <div className="flex items-start gap-2">
+                    <div className="size-10 overflow-hidden">
+                        <IKImage
+                            path={row.getValue('image')}
+                            urlEndpoint={config.env.imagekit.urlEndpoint}
+                            alt="image"
+                            loading="lazy"
+                            className="size-full object-cover"
+                            width={28}
+                            height={28}
+                        />
+                    </div>
+                </div>
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+    {
+        accessorKey: 'title',
+        header: ({ column }) => {
+           
+            return (
+                <button
+                    type="button"
+                    className="flex items-center gap-1.5"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
+                    <span className="inline-flex items-center -space-x-[5px]">
+                        <MoveDown
+                            className={`size-2.5 shrink-0 text-black ${column.getIsSorted() === 'asc' && 'text-gray-500'}`}
+                        />
+                        <MoveUp
+                            className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
+                        />
+                    </span>
+                    Nama Produk
+                </button>
+            )
+        },
+        cell: ({ row }) => {
+            return (
+                <div className="flex items-start gap-2">
+                    <span>{row.getValue('title')}</span>
+                </div>
+            )
+        },
+    },
+    {
+        accessorKey: 'price',
+        header: ({ column }) => {
+            return (
+                <button
+                    type="button"
+                    className="flex items-center gap-1.5"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
+                    <span className="inline-flex items-center -space-x-[5px]">
+                        <MoveDown
+                            className={`size-2.5 shrink-0 text-black ${column.getIsSorted() === 'asc' && 'text-gray-500'}`}
+                        />
+                        <MoveUp
+                            className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
+                        />
+                    </span>
+                    Harga
+                </button>
+            )
+        },
+        cell: ({ row }) => <div>{row.getValue('price')}</div>,
+    },
+    {
+        accessorKey: 'stock',
+        header: ({ column }) => {
+            return (
+                <button
+                    type="button"
+                    className="flex items-center gap-1.5"
+                    onClick={() =>
+                        column.toggleSorting(column.getIsSorted() === 'asc')
+                    }
+                >
+                    <span className="inline-flex items-center -space-x-[5px]">
+                        <MoveDown
+                            className={`size-2.5 shrink-0 text-black ${column.getIsSorted() === 'asc' && 'text-gray-500'}`}
+                        />
+                        <MoveUp
+                            className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
+                        />
+                    </span>
+                    Stok
+                </button>
+            )
+        },
+        cell: ({ row }) => <div>{row.getValue('stock')}</div>,
+    },
+    {
+        id: 'select',
+        header: ({ table }) => (
+            <span>Action</span>
+        ),
+        cell: ({ row }) => (
+            <div className="flex items-center gap-2 w-full">
+                <Button variant="default" className='w-full h-6'>
+                    Edit
+                </Button>
+                <Button variant="destructive" className='w-full h-6'
+                onClick={async () => {
+                    await deleteProduct(row.original);
+                    window.location.reload();
+                  }}>
+                    Hapus
+                </Button>
+            </div>
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    },
+]

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -102,7 +104,7 @@
   }
 
   .progress {
-    @apply rounded-full bg-green-800 p-0.5 text-center font-bebas-neue text-[8px] font-bold leading-none text-light-100;
+    @apply rounded-full bg-green-800 p-0.5 text-center text-[8px] font-bold leading-none text-light-100;
   }
 
   /* Search */
@@ -112,24 +114,6 @@
 
   .search-input {
     @apply w-full border-none font-bold placeholder:font-normal text-white placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none !important;
-  }
-
-
-  /* Not Found */
-  #not-found {
-    @apply flex justify-center items-center flex-col text-center w-full;
-  }
-
-  #not-found h4 {
-    @apply text-white mt-6 font-semibold text-2xl;
-  }
-
-  #not-found p {
-    @apply text-light-100 w-[360px] mt-1;
-  }
-
-  .not-found-btn {
-    @apply bg-primary font-bebas-neue min-w-[360px] mt-6 text-dark-100 text-xl hover:bg-primary/90 min-h-12 !important;
   }
 
   /* Pagination */

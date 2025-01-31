@@ -32,47 +32,10 @@ const layout = async ({ children }: { children: ReactNode }) => {
 
                             <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border mt-4">
                             </div>
-                            
-                            {/* <div className="text-xl flex items-center justify-center font-sans ">
-                            <span>Login</span>
-                            </div> */}
                         </CardTitle>
                         </CardHeader>
                         <CardContent>
                             {children}
-                        {/* <form>
-                            <div className="grid gap-1">
-                            <div className="flex flex-col gap-4">
-                            </div>
-                            
-                            <div className="grid gap-6">
-                                <div className="grid gap-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="example@gmail.com"
-                                    required
-                                />
-                                </div>
-                                <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
-                                </div>
-                                <Input id="password" type="password" placeholder="********" required />
-                                </div>
-                                <Button type="submit" className="w-full">
-                                Login
-                                </Button>
-                            </div>
-                            <div className="text-center text-sm">
-                                Belum punya akun? {""}
-                                <a href="/sign-up" className="underline underline-offset-4">
-                                Daftar
-                                </a>
-                            </div>
-                            </div>
-                        </form> */}
                         </CardContent>
                     </Card>
                 </div>

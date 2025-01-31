@@ -1,3 +1,13 @@
+
+
+import { columns, ITable } from '@/components/custom/table/columns-produk'
+import { DataTable } from '@/components/custom/table/data-table'
+import { Button } from '@/components/ui/button'
+import { format } from 'date-fns'
+import { FaFileExport } from "react-icons/fa6";
+import { CalendarCheck, Plus } from 'lucide-react'
+import Link from 'next/link'
+
 import React from "react";
 
 import { Separator } from "@/components/ui/separator"
@@ -5,7 +15,24 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-const page = () => {
+import { db } from '@/database/drizzle'
+import { products } from '@/database/schema'
+
+const page = async () => {
+    
+    const Produk = await db.select().from(products)
+
+    const data: ITable[] = [
+        ...Produk.map((items) => ({
+            id: items.id,
+            title: items.title,
+            price: items.price,
+            stock: items.stock,
+            image: items.image,
+            // Add other properties as needed
+          })),
+    ]
+
   return (
     <>
     <header className="flex h-16 shrink-0 items-center gap-2">
@@ -15,18 +42,45 @@ const page = () => {
       <span className="font-bold text-2xl font-sans text-black/90">Daftar Produk</span>
       </div>
     </header>
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="aspect-video rounded-xl bg-slate-100/50 dark:bg-slate-800/50">
-          </div>
-          <div className="aspect-video rounded-xl bg-slate-100/50 dark:bg-slate-800/50">
-          </div>
-          <div className="aspect-video rounded-xl bg-slate-100/50 dark:bg-slate-800/50">
-          </div>
+    <div className="space-y-4 ml-3 mr-3">
+            <div className="min-h-[calc(100vh_-_160px)] w-full ">
+                <div className="flex items-center justify-between gap-4 overflow-x-auto rounded-t-lg bg-white px-5 py-[17px]">
+                    <div className="flex items-center gap-2.5">
+                        <Button
+                            type="button"
+                            variant={'outline'}
+                            className="bg-light-theme ring-0"
+                        >
+                            All
+                        </Button>
+                    </div>
+                    <div className="flex items-center gap-2.5">
+                        <div id="search-table"></div>
+
+                        <Link href="/" target="_blank">
+                            <Button
+                            variant={'default'}
+                            size ={'sm'}
+                            >
+                                <FaFileExport />
+                                Export
+                            </Button>
+                        </Link>
+                        <Link href="/produk/new">
+                            <Button
+                            variant={'default'}
+                            size ={'sm'}
+                            >
+                                <Plus />
+                                Tambah Produk
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+
+                <DataTable columns={columns} data={data} filterField="title"/>
+            </div>
         </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-slate-100/50 md:min-h-min dark:bg-slate-800/50">
-        </div>
-      </div>
     </>
   )
 }

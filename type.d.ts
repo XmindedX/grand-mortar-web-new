@@ -1,17 +1,9 @@
-interface Book {
+interface Product {
     id: string;
     title: string;
-    author: string;
-    genre: string;
-    rating: number;
-    totalCopies: number;
-    availableCopies: number;
-    description: string;
-    coverColor: string;
-    coverUrl: string;
-    videoUrl: string;
-    summary: string;
-    createdAt: Date | null;
+    price: number;
+    image: string;
+    stock: number;
   }
   
   interface AuthCredentials {
@@ -20,16 +12,10 @@ interface Book {
     password: string;
   }
   
-  interface BookParams {
+  interface ProductParams {
     title: string;
-    author: string;
-    genre: string;
-    rating: number;
-    coverUrl: string;
-    coverColor: string;
-    description: string;
-    totalCopies: number;
-    videoUrl: string;
-    summary: string;
+    price: number;
+    stock: number;
+    image: string;
   }
   

@@ -8,8 +8,42 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+
+	container: {
+		center: true,
+		padding: '1rem',
+	},
+
+	fontFamily: {
+		'plus-jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+	},
+
   	extend: {
   		colors: {
+			gray: {
+                DEFAULT: '#525866',
+                100: '#FAFBFC',
+                200: '#F9FAFB',
+                300: '#E2E8F0',
+                400: '#F5F7FA',
+                500: '#B9BEC6',
+                600: '#9CA3AF',
+                700: '#6B7280',
+            },
+			danger: {
+                DEFAULT: '#EF4444',
+                light: '#FEE2E2',
+            },
+            success: {
+                DEFAULT: '#22C55E',
+                light: '#DCFCE7',
+            },
+            warning: '#EAB308',
+            'light-theme': '#F4F7FF',
+            'light-orange': '#FFEDD5',
+            'light-blue': '#E0F2FE',
+            'light-purple': '#F3E8FF',
+
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -57,12 +91,7 @@ export default {
   				'800': '#027A48',
   				DEFAULT: '#027A48'
   			},
-  			red: {
-  				'400': '#F46F70',
-  				'500': '#E27233',
-  				'800': '#EF3A4B',
-  				DEFAULT: '#EF3A4B'
-  			},
+
   			blue: {
   				'100': '#0089F1'
   			},
@@ -85,9 +114,6 @@ export default {
   				'600': '#333C5C',
   				'700': '#464F6F',
   				'800': '#1E2230'
-  			},
-  			gray: {
-  				'100': '#CBD5E1'
   			},
   			sidebar: {
   				DEFAULT: 'hsl(var(--sidebar-background))',

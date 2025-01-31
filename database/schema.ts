@@ -1,4 +1,4 @@
-import { uuid, varchar, pgTable, text, pgEnum } from 'drizzle-orm/pg-core';
+import { uuid, varchar, integer, timestamp, pgTable, text, pgEnum } from 'drizzle-orm/pg-core';
 
 // export const PAYMENT_STATUS_ENUM = pgEnum('payment_status', ['Belum Lunas', 'Lunas']);
 export const ROLE_ENUM = pgEnum('role', ['Admin', 'SuperAdmin']);
@@ -11,14 +11,15 @@ export const users = pgTable('users', {
   role: ROLE_ENUM('role').default('Admin'),
 });
 
-// export const products = pgTable('products', {
-//   id: uuid('id').notNull().primaryKey(),
-//   name: varchar('name', { length: 255 }).notNull(),
-//   price: integer('price').notNull(),
-//   image: text('image').notNull(),
-//   createdAt: timestamp('created_at').notNull().defaultNow(),
-//   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-// });
+export const products = pgTable('products', {
+  id: uuid('id').notNull().primaryKey().defaultRandom().unique(),
+  title: varchar('title', { length: 255 }).notNull(),
+  price: integer('price').notNull(),
+  stock: integer('stock').notNull(),
+  image: text('image').notNull(),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+});
 
 // export const orders = pgTable('orders', {
 //   id: uuid('id').notNull().primaryKey(),
