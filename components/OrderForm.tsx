@@ -1,5 +1,7 @@
 "use client"
+
 import { useFieldArray, useForm } from "react-hook-form";
+import { useState } from "react";
 import React from "react";
 import { cn } from "@/lib/utils"
 import { Button } from '@/components/ui/button'
@@ -22,7 +24,6 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { Plus, ChevronsUpDown, Check, Trash2 } from 'lucide-react'
 
-let renderCount = 0;
 
 type FormValues = {
     customer: string;
@@ -30,11 +31,19 @@ type FormValues = {
     email: string;
     alamat: string;
     productList: {
-      id: string;
-      title: string;
+      value: string;
+      label: string;
       quantity: number;
     }[];
   };
+
+  export type Produk = {
+    id: string,
+    title: string,
+    price: number,
+    stock: number,
+    image: string,
+}
 
 export default function OrderForm() {
     const form = useForm<FormValues>({
@@ -43,9 +52,9 @@ export default function OrderForm() {
             number: "",
             email: "",
             productList: [{
-              id: "",
-              title: "",
-              quantity: 0,
+                value: "",
+                label: "",
+                quantity: 0,
             }],
         },
       });
@@ -90,7 +99,8 @@ export default function OrderForm() {
       ]
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState("")
-
+    const [numberOfProducts, setNumberOfProducts] = useState(2)
+        
     return (
         <>
 
@@ -181,8 +191,9 @@ export default function OrderForm() {
                             
                             <div className="space-y-2.5">
                                 {fields.map((field, index) => (
+                                    
                                 
-                                <div className="form-control" key={field.id}>
+                                <div className="" key={`field${index}`}>
                                     <div className="grid gap-5 sm:grid-cols-3 sm:gap-3">
                                         <div className="space-y-2.5">
                                             <Popover open={open} onOpenChange={setOpen}>
@@ -192,6 +203,7 @@ export default function OrderForm() {
                                             role="combobox"
                                             aria-expanded={open}
                                             className="w-[200px] justify-between"
+                                            id={""}
                                             >
                                             {value
                                                 ? products.find((products) => products.value === value)?.label
@@ -207,8 +219,10 @@ export default function OrderForm() {
                                                 <CommandGroup>
                                                 {products.map((products) => (
                                                     <CommandItem
+                                                    id={`field${index}`}
                                                     key={products.value}
                                                     value={products.value}
+                                                    
                                                     onSelect={(currentValue) => {
                                                         setValue(currentValue === value ? "" : currentValue)
                                                         setOpen(false)
@@ -231,44 +245,94 @@ export default function OrderForm() {
                                         </div>
                                         <div className="space-y-2.5">
                                             <Input
+                                            id={`quantityt${index}`}
                                             required
                                             type="number"
                                             />
                                         </div>
                                         <div className="flex space-y-2.5">
                                             <span className="flex leading-tight text-black justify-start pt-2 mt-0.5 ml-2">Rp. 100.000.000</span>
-                                        {index > 0 && (
-                                        <button
-                                        type="button"
-                                        onClick={() => remove(index)}
-                                        className="flex ml-5"
-                                        >
-                                            <Trash2 className="size-5" color="red" />
-                                        </button>
-                                    )}
+                                        
                                         </div>
                                         
                                     </div>
+                                    {index > 0 && (
+                                        <button
+                                        type="button"
+                                        
+                                        className="bg-light-theme text-black hover:text-white"
+                                        onClick={() => remove(index)}
+                                        
+                                        >
+                                            Hapus Produk Terakhir
+                                        </button>
+                                    )}
                                     {/* <input
                                     type="text"
                                     {...register(`productList.${index}.title` as const)}
                                     /> */}
-
-                                    
                                 </div>
+                                
                                 ))}
+                                
                             </div>
+                            
                             <Button
                                 type="button"
                                 variant={'black'}
                                 className="bg-light-theme text-black hover:text-white"
                                 onClick={() =>
-                                    append({ id: "", title: "", quantity: 0 })}
+                                    append({ value: "", label: "", quantity: 0 })}
                             >
                                 <Plus className="size-4" />
                                 Tambah Produk
-                            </Button>   
+                            </Button>
+                            
                             <DropdownMenuSeparator className="mx-0" />
+
+                            <div className="grid gap-5 sm:grid-cols-3 sm:gap-3">
+                                    <label className="block font-semibold leading-tight text-black">
+                                        Nama Produk
+                                    </label>
+                                    <label className="block font-semibold leading-tight text-black">
+                                        Jumlah
+                                    </label>
+                                    <label className="block font-semibold leading-tight text-black">
+                                        Harga
+                                    </label>
+                            </div>
+                            <div className="space-y-2.5">
+                            <div>
+            {fields.map((field, index) => (
+              <div className="form-control" key={field.id}>
+                <input
+                  type="text"
+                  
+                />
+
+                {index > 0 && (
+                  <button type="button" onClick={() => remove(index)}>
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() =>
+                append({
+                  label: "",
+                  quantity: 0,
+                  value: "",
+                })
+              }
+            >
+              Add phone number
+            </button>
+          </div>
+                            </div>
+
+
                             
                             <div className="flex items-center justify-between gap-4">
                                 <Button

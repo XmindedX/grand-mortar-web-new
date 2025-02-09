@@ -3,8 +3,6 @@
 import { products } from "@/database/schema";
 import { db } from "@/database/drizzle";
 import { eq } from "drizzle-orm";
-import ImageKit from "imagekit";
-import { redirect } from "next/navigation";
 
 export const createProduct = async (params: ProductParams) => {
     try {

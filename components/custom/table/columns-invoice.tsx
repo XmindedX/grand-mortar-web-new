@@ -17,34 +17,10 @@ export type ITable = {
     category: string
     location: string
     date: string
-    status: 'done' | 'pending' | 'cancelled'
+    status: 'Lunas' | 'Belum Lunas'
 }
 
 export const columns: ColumnDef<ITable>[] = [
-    // {
-    //     id: 'select',
-    //     header: ({ table }) => (
-    //         <Checkbox
-    //             checked={
-    //                 table.getIsAllPageRowsSelected() ||
-    //                 (table.getIsSomePageRowsSelected() && 'indeterminate')
-    //             }
-    //             onCheckedChange={(value) =>
-    //                 table.toggleAllPageRowsSelected(!!value)
-    //             }
-    //             aria-label="Select all"
-    //         />
-    //     ),
-    //     cell: ({ row }) => (
-    //         <Checkbox
-    //             checked={row.getIsSelected()}
-    //             onCheckedChange={(value) => row.toggleSelected(!!value)}
-    //             aria-label="Select row"
-    //         />
-    //     ),
-    //     enableSorting: false,
-    //     enableHiding: false,
-    // },
     {
         accessorKey: 'name',
         accessorFn: (row) => row.pembeli.name,
@@ -219,11 +195,9 @@ export const columns: ColumnDef<ITable>[] = [
         cell: ({ row }) => (
             <Badge
                 variant={
-                    row.getValue('status') === 'done'
+                    row.getValue('status') === 'Lunas'
                         ? 'green'
-                        : row.getValue('status') === 'pending'
-                          ? 'orange'
-                          : 'red'
+                        : 'red'
                 }
                 className="capitalize w-full"
             >

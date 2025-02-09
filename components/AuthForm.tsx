@@ -54,7 +54,7 @@ const AuthForm = <T extends FieldValues> ({
         title: "Success",
         description: isSignIn 
         ? "Login Berhasil" 
-        : "Register Berhasil",
+        : "Registrasi Berhasil",
         variant: "default",
       });
       router.push("/");
@@ -102,14 +102,10 @@ const AuthForm = <T extends FieldValues> ({
       />
       ))}
         <Button type="submit" className='w-full'>
-          {isSignIn ? "Masuk" : "Daftar"}
+          {isSignIn ? "Masuk" : "Daftarkan Akun Baru"}
         </Button>
       </form>
     </Form>
-    <p className="text-slate-500 text-md font-sans text-center -mt-3">
-      {isSignIn ? "Belum punya akun? " : "Sudah punya akun? "}
-      <Link href={isSignIn ? "/sign-up" : "/login"} className="text-blue-600 font-bold">{isSignIn ? "Daftar disini" : "Login disini"}</Link>
-    </p>
     </div>
   )
 }

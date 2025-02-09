@@ -15,7 +15,7 @@ export type ITable = {
     category: string
     location: string
     date: string
-    status: 'done' | 'pending' | 'cancelled'
+    status: 'Lunas' | 'Belum Lunas'
 }
 
 export const columns: ColumnDef<ITable>[] = [
@@ -196,10 +196,8 @@ export const columns: ColumnDef<ITable>[] = [
             <div className='flex items-start w-28'>
                 <Badge
                     variant={
-                        row.getValue('status') === 'done'
+                        row.getValue('status') === 'Lunas'
                             ? 'green'
-                            : row.getValue('status') === 'pending'
-                            ? 'orange'
                             : 'red'
                     }
                     className="capitalize w-full text-center justify-center"

@@ -45,17 +45,9 @@ const page = async () => {
             <div className="min-h-[calc(100vh_-_160px)] w-full ">
                 <div className="flex items-center justify-between gap-4 overflow-x-auto rounded-t-lg bg-white px-5 py-[17px]">
                     <div className="flex items-center gap-2.5">
-                        <Button
-                            type="button"
-                            variant={'outline'}
-                            className="bg-light-theme ring-0"
-                        >
-                            All
-                        </Button>
+                        <div id="search-table"></div>
                     </div>
                     <div className="flex items-center gap-2.5">
-                        <div id="search-table"></div>
-
                         <Link href="/" target="_blank">
                             <Button
                             variant={'default'}
