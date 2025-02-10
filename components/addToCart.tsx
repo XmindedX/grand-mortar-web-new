@@ -1,3 +1,4 @@
+"use client"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,12 +17,25 @@ import { CirclePlus } from "lucide-react"
 import axios from "axios"
 import  config  from "@/lib/config"
 import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
 
 
 export default function AddToCart()  {
 
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    getProducts();
+  }, [])
+
   const { data: session } = useSession();
   const userId = session?.user.id;
+
+  const getProducts = async () => {
+    const result = await axios.post(`/api/all-products`);
+    return setProductList(result.data);
+    
+  }
 
   const handleAddToCart = async () => {
     const result = await axios.post(`/api/cart`, {
@@ -29,10 +43,6 @@ export default function AddToCart()  {
       productId: productId?.id,
       quantity: quantity,
     });
-  }
-
-  const fetchProducts = async() => {
-    await fetch(`${config.env.apiEndpoint}/api/products`);
   }
 
   return (
@@ -55,7 +65,9 @@ export default function AddToCart()  {
             <Label htmlFor="name" className="text-right">
               Produk
             </Label>
+            
             <Combobox />
+            
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="quantity" className="text-right">

@@ -8,20 +8,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
-
-  import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
-  
 import { Textarea } from '@/components/ui/textarea'
 import { Plus, Trash2 } from 'lucide-react'
 import  AddToCart  from '@/components/addToCart'
-
-
 
 
 type FormValues = {
@@ -35,29 +24,6 @@ type FormValues = {
       quantity: number;
     }[];
   };
-
-  const frameworks = [
-    {
-      value: "next.js",
-      label: "Next.js",
-    },
-    {
-      value: "sveltekit",
-      label: "SvelteKit",
-    },
-    {
-      value: "nuxt.js",
-      label: "Nuxt.js",
-    },
-    {
-      value: "remix",
-      label: "Remix",
-    },
-    {
-      value: "astro",
-      label: "Astro",
-    },
-  ]
 
   export type Produk = {
     id: string,
@@ -80,37 +46,8 @@ export default function NewOrder() {
             }],
         },
       });
-    
-    const products = [
-        {
-          value: "next.js",
-          label: "Next.js",
-          price: 1000,
-        },
-        {
-          value: "sveltekit",
-          label: "SvelteKit",
-          price: 2000,
-        },
-        {
-          value: "nuxt.js",
-          label: "Nuxt.js",
-          price: 3000,
-        },
-        {
-          value: "remix",
-          label: "Remix",
-          price: 4000,
-        },
-        {
-          value: "astro",
-          label: "Astro",
-          price: 5000,
-        },
-      ]
-    const [open, setOpen] = React.useState(true)
-    const [value, setValue] = React.useState("")
-    const [numberOfProducts, setNumberOfProducts] = useState(1)
+      
+    const [cart, setCart] = useState([]);
         
     return (
         <>
@@ -136,7 +73,7 @@ export default function NewOrder() {
                                     <div className="w-full">
                                     <Input
                                         type="number"
-                                        placeholder="312-718-1914"
+                                        placeholder=""
                                         className={`rounded-l-none`}
                                     />
                                     </div>
@@ -148,7 +85,7 @@ export default function NewOrder() {
                                     </label>
                                     <Input
                                         type="email"
-                                        placeholder="john.example@gmail.com"
+                                        placeholder=""
                                     />
                                 </div>
                             </div>
@@ -157,8 +94,8 @@ export default function NewOrder() {
                                     Alamat
                                 </label>
                                 <Textarea
-                                    rows={6}
-                                    placeholder="Enter address here"
+                                    rows={3}
+                                    placeholder=""
                                 />
                             </div>
                             <div className="grid gap-5 sm:grid-cols-3 sm:gap-3">

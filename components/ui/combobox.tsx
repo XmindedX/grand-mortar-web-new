@@ -19,37 +19,28 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
-
-const products = [
-  //get product from database
-  
-]
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export function Combobox() {
+
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [label, setLabel] = useState()
+  const [value, setValue] = useState()
+
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    getProducts();
+  }, [])
+
+
+  const getProducts = async () => {
+    const result = await axios.post(`/api/all-products`);
+    return setProductList(result.data);
+  }
+
+  console.log(value);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -61,35 +52,57 @@ export function Combobox() {
           className="w-[200px] justify-between"
         >
           {value
-            ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+            ? productList.find((product) => product?.title === value)?.title
+            : "Pilih produk..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." className="h-9" />
+          <CommandInput placeholder="Cari produk..." className="h-9" />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>Produk tidak ditemukan</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+            {productList.map((product, index) => (
+              
+              <CommandItem
+                key={index}
+                value={product?.title}
+
+                onSelect={(currentValue) => {
+                  setValue(currentValue === value ? "" : currentValue)
+                  setOpen(false)
+                }}
+              >
+                {product?.title}
+                <Check
+                  className={cn(
+                    "ml-auto",
+                    value === product?.title ? "opacity-100" : "opacity-0"
+                  )}
+                />
+              </CommandItem>
+
+            ))}
+
+              {/* {productList.map((product, index) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={index}
+                  value={product}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
                   }}
                 >
-                  {framework.label}
+                  {product}
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      value === product ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
-              ))}
+              ))} */}
             </CommandGroup>
           </CommandList>
         </Command>
