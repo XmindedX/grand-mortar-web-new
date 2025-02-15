@@ -1,5 +1,5 @@
-import { int } from 'drizzle-orm/mysql-core';
 import { uuid, varchar, integer, timestamp, pgTable, text, pgEnum } from 'drizzle-orm/pg-core';
+import { relations } from "drizzle-orm";
 
 export const users = pgTable('users', {
   id: uuid('id').notNull().defaultRandom().primaryKey().unique(),
@@ -18,35 +18,34 @@ export const products = pgTable('products', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
-export const cart = pgTable('cart', {
-  id: uuid('id').notNull().defaultRandom().primaryKey().unique(),
-  userId: uuid('userId')
-  .notNull()
-  .references(() => users.id),
-  productId: uuid('productId')
-  .notNull()
-  .references(() => products.id),
-  quantity: integer('quantity').notNull(),
+// Schema untuk cart
+export const carts = pgTable("carts", {
+  id: uuid("id").primaryKey().defaultRandom().unique(),
+  userId: uuid("user_id").unique().notNull().references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
-// export const orders = pgTable('orders', {
-//   id: uuid('id').notNull().primaryKey(),
-//   userId: uuid('user_id').notNull().references(() => users.id),
-//   productId: integer('product_id').notNull().references(() => products.id),
-//   quantity: integer('quantity').notNull(),
-//   status: PAYMENT_STATUS_ENUM('status').default('Belum Lunas'),
-//   total: integer('total').notNull(),
-//   piutang: integer('piutang').notNull(),
-//   createdAt: timestamp('created_at').notNull().defaultNow(),
-//   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-// });
+// Schema untuk cart_items
+export const cartItems = pgTable("cart_items", {
+  id: uuid("id").primaryKey().defaultRandom().unique(),
+  cartId: uuid("cart_id").references(() => carts.id),
+  productId: uuid("product_id").unique().notNull().references(() => products.id),
+  quantity: integer("quantity").notNull(),
+});
 
-// export const receipt = pgTable('receipt', {
-//   id: uuid('id').notNull().primaryKey(),
-//   userId: uuid('user_id').notNull().references(() => users.id),
-//   productId: integer('product_id').notNull().references(() => products.id),
-//   quantity: integer('quantity').notNull(),
-//   createdAt: timestamp('created_at').notNull().defaultNow(),
-//   updatedAt: timestamp('updated_at').notNull().defaultNow(),
-// });
+// Relations (untuk query yang lebih mudah)
+export const cartRelations = relations(carts, ({ many }) => ({
+  items: many(cartItems),
+}));
+
+export const cartItemRelations = relations(cartItems, ({ one }) => ({
+  cart: one(carts, {
+    fields: [cartItems.cartId],
+    references: [carts.id],
+  }),
+  product: one(products, {
+    fields: [cartItems.productId],
+    references: [products.id],
+  }),
+}));
 

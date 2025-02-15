@@ -37,8 +37,12 @@ export const orderParams = z.object({
     ),
 });
 
-export const cartSchema = z.object({
+export const cartsSchema = z.object({
     userId: z.string(),
+});
+
+export const cartItemsSchema = z.object({
+    cartId: z.string(),
     productId: z.string(),
     quantity: z.coerce.number().int().positive(),
 });

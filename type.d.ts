@@ -6,18 +6,29 @@ interface Product {
     stock: number;
   }
 
-interface Cart {
+interface Carts {
     id: string;
     userId: string;
+  }
+
+interface CartsParams {
+    id: string;
+    userId: string;
+  }
+
+interface CartItems {
+    id: string;
+    cartId: string;
     productId: string;
     quantity: number;
   }
 
-interface CartParams {
-    userId: string;
+interface CartItemsParams {
+    cartId: string;
     productId: string;
     quantity: number;
   }
+
   
   interface AuthCredentials {
     name: string;

@@ -31,9 +31,9 @@ export const columns: ColumnDef<ITable>[] = [
                             urlEndpoint={config.env.imagekit.urlEndpoint}
                             alt="image"
                             loading="lazy"
-                            className="size-full object-cover"
-                            width={28}
-                            height={28}
+                            className="size-full object-cover w-10 h-10"
+                            width={100}
+                            height={100}
                         />
                     </div>
                 </div>

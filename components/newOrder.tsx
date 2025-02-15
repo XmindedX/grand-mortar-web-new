@@ -1,17 +1,26 @@
 "use client"
 
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+
+import { z } from "zod";
+
 import React from "react";
-import { cn } from "@/lib/utils"
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Plus, Trash2 } from 'lucide-react'
+
+import { cartsSchema } from "@/lib/validations"
+import { getCartItems } from "@/lib/actions/cart";
+
+import CartItem from "@/components/cartItem";
 import  AddToCart  from '@/components/addToCart'
 
+import axios from "axios";
+
+import { useSession } from "next-auth/react";
 
 type FormValues = {
     customer: string;
@@ -25,15 +34,54 @@ type FormValues = {
     }[];
   };
 
-  export type Produk = {
-    id: string,
-    title: string,
-    price: number,
-    stock: number,
-    image: string,
-}
+  type CartItem = {
+    id: number;
+    cartId: string;
+    productId: number;
+    quantity: number;
+    productImage: string;
+    productName: string;
+    productPrice: number;
+  };
+
+  type CartData = z.infer<typeof cartsSchema>;
 
 export default function NewOrder() {
+
+    const userId = useSession().data?.user?.id as string;
+    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const fetchCart = async () => {
+          setIsLoading(true);
+          setError(null);
+    
+          const items = await getCartItems(userId);
+    
+          if (items.length === 0) {
+            setError('Your cart is empty');
+          } else {
+            setCartItems(items as any);
+          }
+    
+          setIsLoading(false);
+        };
+    
+        fetchCart();
+      }, [userId]);
+
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    const getProducts = async () => {
+        const response = await axios.get("/api/all-products");
+        setProducts(response.data);
+    };
+
     const form = useForm<FormValues>({
         defaultValues: {
             customer: "",
@@ -47,7 +95,9 @@ export default function NewOrder() {
         },
       });
       
-    const [cart, setCart] = useState([]);
+    
+    // console.log(cart, "Cart");
+    console.log(cartItems, "CartItems");
         
     return (
         <>
@@ -125,9 +175,11 @@ export default function NewOrder() {
                                 </div>
                             </div>
                             <DropdownMenuSeparator className="mx-0" />
+
+                            <CartItem cart={cartItems} />
                             
                             <div className="space-y-2.5">
-                                <AddToCart />
+                                <AddToCart products={products} userId={userId} />
                             </div>
                             
                             <div className="flex items-center justify-between gap-4">
