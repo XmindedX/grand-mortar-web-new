@@ -82,4 +82,20 @@ interface CartItemsParams {
     productId: string;
     quantity: number;
   }
+
+  interface Receipt {
+    id: string;
+    userId: string;
+    orderId: string;
+    receiptNumber: string;
+    nominal: number;
+    customer: string;
+  }
+  
+  interface ReceiptParams {
+    userId: string;
+    orderId: string;
+    nominal: number;
+    customer: string;
+  }
   

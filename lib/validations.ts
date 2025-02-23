@@ -44,3 +44,10 @@ export const orderItemsSchema = z.object({
     productId: z.string(),
     quantity: z.coerce.number().int().positive(),
 });
+
+export const receiptSchema = z.object({
+    userId: z.string(),
+    orderId: z.string(),
+    nominal: z.coerce.number().int().positive(),
+    customer: z.string().min(3),
+});

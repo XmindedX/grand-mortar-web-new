@@ -23,6 +23,7 @@ const page = async () => {
     const data: ITable[] = [
         ...ordersList.map((items) => ({
             id: items.id,
+            trxId: items.trxId,
             customer: items.customer,
             number: items.number,
             email: items.email,

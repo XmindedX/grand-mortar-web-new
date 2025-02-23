@@ -7,6 +7,7 @@ import { MoveDown, MoveUp } from 'lucide-react'
 
 export type ITable = {
     id: string;
+    trxId: string;
     customer: string;
     number: string;
     email: string;
@@ -47,7 +48,7 @@ export const columns: ColumnDef<ITable>[] = [
         },
     },
     {
-        accessorKey: 'id',
+        accessorKey: 'trxId',
         header: ({ column }) => {
             return (
                 <button
@@ -72,7 +73,7 @@ export const columns: ColumnDef<ITable>[] = [
         cell: ({ row }) => (
             <div className='flex items-start w-12'>
                 <Badge className="bg-gray-400 text-black">
-                    {row.getValue('total')}
+                    {row.getValue('trxId')}
                 </Badge>
             </div>
         ),
@@ -103,7 +104,7 @@ export const columns: ColumnDef<ITable>[] = [
         },
         cell: ({ row }) =>
         <div className='flex items-start w-28'>
-            {row.getValue('total')}
+            Rp. {(row.getValue('total') as number).toLocaleString('id-ID')}
         </div>,
     },
     {
@@ -125,13 +126,13 @@ export const columns: ColumnDef<ITable>[] = [
                             className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
                         />
                     </span>
-                    Kurang Bayar
+                    Piutang
                 </button>
             )
         },
         cell: ({ row }) =>
         <div className='flex items-start w-28'>
-            {row.getValue('piutang')}
+            Rp. {(row.getValue('piutang') as number).toLocaleString('id-ID')}
         </div>,
     },
     {
@@ -160,7 +161,7 @@ export const columns: ColumnDef<ITable>[] = [
         cell: ({ row }) =>
             
         <div className='flex items-start w-24'>
-            {new Date(row.original.createdAt).toLocaleDateString()}
+            {new Date(row.original.createdAt).toLocaleDateString('id-ID')}
         </div>,
     },
     {

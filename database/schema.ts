@@ -35,10 +35,11 @@ export const cartItems = pgTable("cart_items", {
 
 export const orders = pgTable('orders', {
   id: uuid("id").primaryKey().defaultRandom().unique(),
+  trxId: varchar('trx_id').notNull().unique(),
   userId: uuid('user_id').references(() => users.id),
   customer: varchar('customer').notNull(),
   total: integer('total').notNull(),
-  piutang: integer('piutang').notNull(),
+  piutang: integer('piutang').notNull().default(0),
   status: text('status').notNull().default('Belum Lunas'),
   number: text('number').notNull(),
   email: text('email').notNull(),
@@ -55,6 +56,16 @@ export const orderItems = pgTable('order_items', {
   orderId: uuid('order_id').references(() => orders.id),
   productId: uuid('product_id').references(() => products.id),
   quantity: integer('quantity').notNull(),
+});
+
+export const receipts = pgTable('receipts', {
+  id: uuid('id').primaryKey().defaultRandom().unique(),
+  userId: uuid('user_id').references(() => users.id).notNull(),
+  orderId: uuid('order_id').references(() => orders.id).notNull(),
+  receiptNumber: varchar('receipt_number').unique().notNull(),
+  customer: varchar('customer').notNull(),
+  nominal: integer('nominal').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
 export const orderRelations = relations(orders, ({ many }) => ({

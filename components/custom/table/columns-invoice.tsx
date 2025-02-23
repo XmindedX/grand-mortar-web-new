@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -7,10 +7,12 @@ import { ColumnDef } from '@tanstack/react-table'
 import { MoveDown, MoveUp } from 'lucide-react'
 
 import router from 'next/router'
+import { redirect } from 'next/navigation'
 
 
 export type ITable = {
     id: string;
+    trxId: string;
     customer: string;
     number: string;
     email: string;
@@ -25,6 +27,7 @@ export type ITable = {
 }
 
 export const columns: ColumnDef<ITable>[] = [
+    
     {
         accessorKey: 'customer',
         accessorFn: (row) => row.customer,
@@ -51,7 +54,7 @@ export const columns: ColumnDef<ITable>[] = [
         },
     },
     {
-        accessorKey: 'id',
+        accessorKey: 'trxId',
         header: ({ column }) => {
             return (
                 <button
@@ -75,7 +78,7 @@ export const columns: ColumnDef<ITable>[] = [
         },
         cell: ({ row }) => (
             <Badge className="bg-gray-400 text-black">
-                {row.getValue('total')}
+                {row.getValue('trxId')}
             </Badge>
         ),
     },
@@ -99,11 +102,13 @@ export const columns: ColumnDef<ITable>[] = [
                             className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
                         />
                     </span>
-                    Category
+                    Total
                 </button>
             )
         },
-        cell: ({ row }) => <div>{row.getValue('total')}</div>,
+        cell: ({ row }) => <div>
+            Rp. {(row.getValue('total') as number).toLocaleString('id-ID')}
+        </div>,
     },
     {
         accessorKey: 'piutang',
@@ -124,11 +129,13 @@ export const columns: ColumnDef<ITable>[] = [
                             className={`size-2.5 shrink-0 text-gray-500 ${column.getIsSorted() === 'asc' && '!text-black'}`}
                         />
                     </span>
-                    Location
+                    Piutang
                 </button>
             )
         },
-        cell: ({ row }) => <div>{row.getValue('piutang')}</div>,
+        cell: ({ row }) => <div>
+            Rp. {(row.getValue('piutang') as number).toLocaleString('id-ID')}
+        </div>,
     },
     {
         accessorKey: 'createdAt',
@@ -155,7 +162,7 @@ export const columns: ColumnDef<ITable>[] = [
         },
         cell: ({ row }) => 
         <div>
-            {new Date(row.original.createdAt).toLocaleDateString()}
+            {new Date(row.original.createdAt).toLocaleDateString('id-ID')}
         </div>,
     },
     {
@@ -188,7 +195,7 @@ export const columns: ColumnDef<ITable>[] = [
                         ? 'green'
                         : 'red'
                 }
-                className="capitalize w-full"
+                className="capitalize w-full text-center justify-center"
             >
                 {row.getValue('status')}
             </Badge>
@@ -204,7 +211,7 @@ export const columns: ColumnDef<ITable>[] = [
                 <Button variant="default" className='w-full h-6'>
                     Lihat Detail
                 </Button>
-                <Button variant="default" className='w-full h-6' onClick={() => {router.push(`/invoice/${row.original.id}`)}}>
+                <Button variant="default" className='w-full h-6' onClick={() => window.location.href = `/receipt/new/${row.original.id}`}>
                     Buat Receipt
                 </Button>
             </div>

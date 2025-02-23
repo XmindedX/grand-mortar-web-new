@@ -15,10 +15,25 @@ export async function createOrder(formData: OrderParams, itemsData: OrderItemsPa
     .limit(1)
   if (!cartId) throw new Error('Cart not found');
 try {
+  //Generate trxId
+  const newTrxId = "TRX-" + Math.floor(Math.random() * 1000000);
+
+  // Cek duplikasi trxId
+  const existingTrxId = await db
+    .select()
+    .from(orders)
+    .where(eq(orders.trxId, newTrxId as any))
+    .limit(1);
+
+  if (existingTrxId.length > 0) {
+    const newTrxId = "TRX-" + Math.floor(Math.random() * 1000000);
+  }
+  // Create order
   const order = await db
     .insert(orders)
     .values({
       userId: formData.userId,
+      trxId: newTrxId,
       customer: formData.customer,
       number: formData.number,
       email: formData.email,

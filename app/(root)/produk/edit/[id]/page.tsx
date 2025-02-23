@@ -16,8 +16,6 @@ const page = async({
     .from(products)
     .where(eq(products.id, (params.id)))
     .then((res) => res[0])
-
-    console.log(product, "product");
   return (
     <>
     <section className="flex flex-col w-full gap-4">
