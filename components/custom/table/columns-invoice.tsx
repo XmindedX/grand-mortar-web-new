@@ -5,25 +5,29 @@ import { Button } from '@/components/ui/button'
 
 import { ColumnDef } from '@tanstack/react-table'
 import { MoveDown, MoveUp } from 'lucide-react'
-import Image from 'next/image'
+
+import router from 'next/router'
+
 
 export type ITable = {
-    id: string
-    pembeli: {
-        image: string
-        name: string
-    }
-    sales_id: string
-    category: string
-    location: string
-    date: string
-    status: 'Lunas' | 'Belum Lunas'
+    id: string;
+    customer: string;
+    number: string;
+    email: string;
+    address: string;
+    city: string;
+    province: string;
+    postalCode: number;
+    status: string;
+    total: number;
+    piutang: number;
+    createdAt: Date;
 }
 
 export const columns: ColumnDef<ITable>[] = [
     {
-        accessorKey: 'name',
-        accessorFn: (row) => row.pembeli.name,
+        accessorKey: 'customer',
+        accessorFn: (row) => row.customer,
         header: ({ column }) => {
             return (
                 <button
@@ -45,27 +49,9 @@ export const columns: ColumnDef<ITable>[] = [
                 </button>
             )
         },
-        cell: ({ row }) => {
-            const image = row.original.pembeli
-
-            return (
-                <div className="flex items-center gap-2">
-                    <div className="size-6 overflow-hidden">
-                        <Image
-                            src={image.image}
-                            alt={image.name}
-                            className="size-full object-cover"
-                            width={24}
-                            height={24}
-                        />
-                    </div>
-                    <span>{image.name}</span>
-                </div>
-            )
-        },
     },
     {
-        accessorKey: 'sales_id',
+        accessorKey: 'id',
         header: ({ column }) => {
             return (
                 <button
@@ -89,13 +75,13 @@ export const columns: ColumnDef<ITable>[] = [
         },
         cell: ({ row }) => (
             <Badge className="bg-gray-400 text-black">
-                {row.getValue('sales_id')}
+                {row.getValue('total')}
             </Badge>
         ),
     },
 
     {
-        accessorKey: 'category',
+        accessorKey: 'total',
         header: ({ column }) => {
             return (
                 <button
@@ -117,10 +103,10 @@ export const columns: ColumnDef<ITable>[] = [
                 </button>
             )
         },
-        cell: ({ row }) => <div>{row.getValue('category')}</div>,
+        cell: ({ row }) => <div>{row.getValue('total')}</div>,
     },
     {
-        accessorKey: 'location',
+        accessorKey: 'piutang',
         header: ({ column }) => {
             return (
                 <button
@@ -142,10 +128,10 @@ export const columns: ColumnDef<ITable>[] = [
                 </button>
             )
         },
-        cell: ({ row }) => <div>{row.getValue('location')}</div>,
+        cell: ({ row }) => <div>{row.getValue('piutang')}</div>,
     },
     {
-        accessorKey: 'date',
+        accessorKey: 'createdAt',
         header: ({ column }) => {
             return (
                 <button
@@ -167,7 +153,10 @@ export const columns: ColumnDef<ITable>[] = [
                 </button>
             )
         },
-        cell: ({ row }) => <div>{row.getValue('date')}</div>,
+        cell: ({ row }) => 
+        <div>
+            {new Date(row.original.createdAt).toLocaleDateString()}
+        </div>,
     },
     {
         accessorKey: 'status',
@@ -215,7 +204,7 @@ export const columns: ColumnDef<ITable>[] = [
                 <Button variant="default" className='w-full h-6'>
                     Lihat Detail
                 </Button>
-                <Button variant="default" className='w-full h-6'>
+                <Button variant="default" className='w-full h-6' onClick={() => {router.push(`/invoice/${row.original.id}`)}}>
                     Buat Receipt
                 </Button>
             </div>

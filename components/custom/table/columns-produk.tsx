@@ -130,7 +130,7 @@ export const columns: ColumnDef<ITable>[] = [
         ),
         cell: ({ row }) => (
             <div className="flex items-center gap-2 w-full">
-                <Button variant="default" className='w-full h-6'>
+                <Button variant="default" className='w-full h-6' onClick={() => window.location.href = `/produk/edit/${row.original.id}`}>
                     Edit
                 </Button>
                 <Button variant="destructive" className='w-full h-6'

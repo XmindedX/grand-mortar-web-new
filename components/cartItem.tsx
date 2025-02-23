@@ -1,7 +1,12 @@
 import React from 'react'
 
+import { Trash } from 'lucide-react'
+
+import Link from 'next/link'
 import { IKImage } from "imagekitio-next";
 import config from "@/lib/config";
+
+import { Button } from '@/components/ui/button'
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu'
 
 type isiCart = {
@@ -25,6 +30,7 @@ const CartItem = ({cart}: cartProps) => {
     {cart.map((item) => (
       <div key={item.id} className="flex items-center justify-between w-full">
         <div className="flex items-center">
+                <Trash className="mr-4" color='red' size={20} />
             <IKImage
                 path={item.productImage}
                 urlEndpoint={config.env.imagekit.urlEndpoint}
@@ -37,7 +43,6 @@ const CartItem = ({cart}: cartProps) => {
           <div>
             <h3 className="text-lg font-semibold">{item.productName}</h3>
             <p className="text-gray-600 mr-4">Jumlah: {item.quantity}</p>
-            
           </div>
         </div>
         <div className="flex items-center">

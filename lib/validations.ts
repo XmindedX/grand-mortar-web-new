@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, z } from "zod";
 
 export const signUpSchema = z.object({
     name: z.string().min(3),
@@ -18,31 +18,29 @@ export const productSchema = z.object({
     image: z.string().nonempty(),
 });
 
-export const orderSchema = z.object({
-    productId: z.string(),
-    quantity: z.coerce.number().int().positive(),
-});
-
-export const orderParams = z.object({
-    customer: z.string().min(3).max(100),
-    number: z.string().min(3).max(100),
-    email: z.string().email(),
-    alamat: z.string().min(3).max(100),
-    productList: z.array(
-        z.object({
-            id: z.string().min(3).max(100),
-            title: z.string().min(3).max(100),
-            quantity: z.coerce.number().int().positive(),
-        })
-    ),
-});
-
 export const cartsSchema = z.object({
     userId: z.string(),
 });
 
 export const cartItemsSchema = z.object({
     cartId: z.string(),
+    productId: z.string(),
+    quantity: z.coerce.number().int().positive(),
+});
+
+export const orderSchema = z.object({
+    userId: z.string(),
+    customer: z.string().min(3),
+    number: z.coerce.number().int().min(3),
+    email: z.string().email(),
+    address: z.string().min(10),
+    city: z.string().min(3),
+    province: z.string().min(3),
+    postalCode: z.coerce.number().int().positive(),
+  });
+
+export const orderItemsSchema = z.object({
+    orderId: z.string(),
     productId: z.string(),
     quantity: z.coerce.number().int().positive(),
 });

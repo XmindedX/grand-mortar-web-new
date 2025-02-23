@@ -1,6 +1,7 @@
 "use client"
 
 import React from 'react';
+import Link from "next/link"
 import { z } from "zod";
 import {
   useForm,
@@ -22,7 +23,7 @@ import { Input } from "@/components/ui/input"
 import { toast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
 import { productSchema } from '@/lib/validations';
-import { createProduct } from '@/lib/actions/product';
+import { createProduct, updateProduct } from '@/lib/actions/product';
 
 interface Props extends Partial<Product> {
   type?: "create" | "update";
@@ -42,6 +43,23 @@ const ProductForm = ({type,...product}: Props) => {
     },
   });
   const onSubmit = async (value: z.infer<typeof productSchema>) => {
+    if (type === "update") {
+      const result = await updateProduct(product?.id ?? "", value);
+      if (result.success) {
+        toast({
+          title: "Success",
+          description: "Produk berhasil diupdate",
+        });
+        router.push("/produk");
+      } else {
+        toast({
+          title: "Error",
+          description: result.error,
+          variant: "destructive",
+        });
+      }
+      return;
+    }
     const result = await createProduct(value);
 
     if (result.success) {
@@ -148,7 +166,14 @@ const ProductForm = ({type,...product}: Props) => {
                         </FormItem>
                         )}
                         />
-                        <Button type="submit">Tambah Produk</Button>
+                        <div className='flex justify-between'>
+                        <Button asChild variant="outline" className='justify-start'>
+                          <Link href="/produk">Kembali</Link>
+                        </Button>
+                        <Button type="submit" className='justify-end'>
+                          {type === "create" ? "Buat Produk" : "Update Produk"}
+                        </Button>
+                        </div>
                     </form>
                 </Form>
             </CardContent>

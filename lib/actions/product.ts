@@ -58,6 +58,33 @@ export const deleteProduct = async (data: Product) => {
     }
 }
 
-export const updateProduct = async (id: string) => {
+export const updateProduct = async (id: string, params: ProductParams) => {
+    try {
+        console.log(id, params);
+        const updateProduct = await db
+        .update(products)
+        .set({
+            ...params,
+        })
+        .where(eq(products.id, id))
+        .returning();
 
+        if (!updateProduct) {
+            return {
+                success: false,
+                error: "Failed to update product",
+            }    
+        }
+
+        return {
+            success: true,
+            data: JSON.parse(JSON.stringify(updateProduct[0])),
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            error: "Failed to update product",
+        }
+    }
 }

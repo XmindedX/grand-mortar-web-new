@@ -6,6 +6,10 @@ interface Product {
     stock: number;
   }
 
+interface userParams {
+    userId: string;
+  }
+
 interface Carts {
     id: string;
     userId: string;
@@ -28,7 +32,6 @@ interface CartItemsParams {
     productId: string;
     quantity: number;
   }
-
   
   interface AuthCredentials {
     name: string;
@@ -45,26 +48,38 @@ interface CartItemsParams {
 
   interface Order {
     id: string;
+    userId: string;
     customer: string;
     number: string;
     email: string;
-    alamat: string;
-    productList: {
-      id: string;
-      title: string;
-      quantity: number;
-    }[];
+    address: string;
+    city: string;
+    province: string;
+    postalCode: number;
   }
   
   interface OrderParams {
+    id: string;
+    userId: string;
     customer: string;
     number: string;
     email: string;
-    alamat: string;
-    productList: {
-      id: string;
-      title: string;
-      quantity: number;
-    }[];
+    address: string;
+    city: string;
+    province: string;
+    postalCode: number;
+  }
+
+  interface OrderItems {
+    id: string;
+    orderId: string;
+    productId: string;
+    quantity: number;
+  }
+  
+  interface OrderItemsParams {
+    orderId: string;
+    productId: string;
+    quantity: number;
   }
   

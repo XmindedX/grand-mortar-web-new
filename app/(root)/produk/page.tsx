@@ -28,7 +28,6 @@ const page = async () => {
             price: items.price,
             stock: items.stock,
             image: items.image,
-            // Add other properties as needed
           })),
     ]
 

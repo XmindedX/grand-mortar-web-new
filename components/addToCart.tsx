@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -43,10 +44,6 @@ export default function AddToCart({products, userId}: AddToCartProps)  {
       setError('Please select a product');
       return;
     }
-
-    console.log(selectedProductId)
-    console.log(userId)
-    console.log(quantity)
 
     const cartData: CartData = {
       userId: userId,
@@ -122,9 +119,11 @@ export default function AddToCart({products, userId}: AddToCartProps)  {
           </div>
         </div>
         <DialogFooter>
+        <DialogClose asChild>
           <Button type="submit" onClick = {handleAddToCart} disabled={loading || !selectedProductId}>
           {loading ? "Menambahkan..." : "Tambah Produk"}
           </Button>
+        </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

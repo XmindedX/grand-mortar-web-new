@@ -33,7 +33,34 @@ export const cartItems = pgTable("cart_items", {
   quantity: integer("quantity").notNull(),
 });
 
-// Relations (untuk query yang lebih mudah)
+export const orders = pgTable('orders', {
+  id: uuid("id").primaryKey().defaultRandom().unique(),
+  userId: uuid('user_id').references(() => users.id),
+  customer: varchar('customer').notNull(),
+  total: integer('total').notNull(),
+  piutang: integer('piutang').notNull(),
+  status: text('status').notNull().default('Belum Lunas'),
+  number: text('number').notNull(),
+  email: text('email').notNull(),
+  address: text('address').notNull(),
+  city: text('city').notNull(),
+  province: text('province').notNull(),
+  postalCode: integer('postal_code').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  
+});
+
+export const orderItems = pgTable('order_items', {
+  id: uuid("id").primaryKey().defaultRandom().unique(),
+  orderId: uuid('order_id').references(() => orders.id),
+  productId: uuid('product_id').references(() => products.id),
+  quantity: integer('quantity').notNull(),
+});
+
+export const orderRelations = relations(orders, ({ many }) => ({
+  items: many(orderItems),
+}));
+
 export const cartRelations = relations(carts, ({ many }) => ({
   items: many(cartItems),
 }));
@@ -45,6 +72,17 @@ export const cartItemRelations = relations(cartItems, ({ one }) => ({
   }),
   product: one(products, {
     fields: [cartItems.productId],
+    references: [products.id],
+  }),
+}));
+
+export const orderItemRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, {
+    fields: [orderItems.orderId],
+    references: [orders.id],
+  }),
+  product: one(products, {
+    fields: [orderItems.productId],
     references: [products.id],
   }),
 }));

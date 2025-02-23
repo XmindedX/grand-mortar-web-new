@@ -11,7 +11,7 @@ export const createCart = async (cartData: CartsParams, cartItem: CartItemsParam
     const { cartId, productId, quantity } = cartItem;
     
       try {
-        // Cari atau buat keranjang untuk user
+        // Cari atau buat cart untuk user
         const cart = await db
           .insert(carts)
           .values({ 
@@ -22,7 +22,7 @@ export const createCart = async (cartData: CartsParams, cartItem: CartItemsParam
           })
           .returning();
 
-        // Tambahkan item ke keranjang
+        // Add item to cart
         const item = await db
           .insert(cartItems)
           .values({
@@ -43,7 +43,7 @@ export const createCart = async (cartData: CartsParams, cartItem: CartItemsParam
 
 export const getCartItems = async (userId: any) => {
   try {
-    // Ambil keranjang user
+    // Get keranjang user
     const userCart = await db
       .select()
       .from(carts)
@@ -53,7 +53,7 @@ export const getCartItems = async (userId: any) => {
       return [];
     }
 
-    // Ambil item keranjang
+    // Get item keranjang
     const cartItemsData = await db
       .select({
         id: cartItems.id,

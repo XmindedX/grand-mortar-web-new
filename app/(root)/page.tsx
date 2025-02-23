@@ -47,12 +47,6 @@ export default function Home() {
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
         <div className="grid auto-rows-min gap-4">
         <div className='grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-3'>
-          {/* <AnalyticsCard
-            title='Total Users'
-            value={analyticsData.users.toLocaleString()}
-            icon={Users}
-            color='from-blue-500 to-teal-700'
-          /> */}
           <AnalyticsCard
             title='Total Produk'
             value={"5"}

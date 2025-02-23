@@ -6,22 +6,24 @@ import { ColumnDef } from '@tanstack/react-table'
 import { MoveDown, MoveUp } from 'lucide-react'
 
 export type ITable = {
-    id: string
-    pembeli: {
-        image: string
-        name: string
-    }
-    sales_id: string
-    category: string
-    location: string
-    date: string
-    status: 'Lunas' | 'Belum Lunas'
+    id: string;
+    customer: string;
+    number: string;
+    email: string;
+    address: string;
+    city: string;
+    province: string;
+    postalCode: number;
+    status: string;
+    total: number;
+    piutang: number;
+    createdAt: Date;
 }
 
 export const columns: ColumnDef<ITable>[] = [
     {
-        accessorKey: 'name',
-        accessorFn: (row) => row.pembeli.name,
+        accessorKey: 'customer',
+        accessorFn: (row) => row.customer,
         header: ({ column }) => {
             return (
                 <button
@@ -43,18 +45,9 @@ export const columns: ColumnDef<ITable>[] = [
                 </button>
             )
         },
-        cell: ({ row }) => {
-            const image = row.original.pembeli
-
-            return (
-                <div className="flex items-start w-28">
-                    <span>{image.name}</span>
-                </div>
-            )
-        },
     },
     {
-        accessorKey: 'sales_id',
+        accessorKey: 'id',
         header: ({ column }) => {
             return (
                 <button
@@ -79,14 +72,14 @@ export const columns: ColumnDef<ITable>[] = [
         cell: ({ row }) => (
             <div className='flex items-start w-12'>
                 <Badge className="bg-gray-400 text-black">
-                    {row.getValue('sales_id')}
+                    {row.getValue('total')}
                 </Badge>
             </div>
         ),
     },
 
     {
-        accessorKey: 'category',
+        accessorKey: 'total',
         header: ({ column }) => {
             return (
                 <button
@@ -110,11 +103,11 @@ export const columns: ColumnDef<ITable>[] = [
         },
         cell: ({ row }) =>
         <div className='flex items-start w-28'>
-            {row.getValue('category')}
+            {row.getValue('total')}
         </div>,
     },
     {
-        accessorKey: 'location',
+        accessorKey: 'piutang',
         header: ({ column }) => {
             return (
                 <button
@@ -138,11 +131,11 @@ export const columns: ColumnDef<ITable>[] = [
         },
         cell: ({ row }) =>
         <div className='flex items-start w-28'>
-            {row.getValue('location')}
+            {row.getValue('piutang')}
         </div>,
     },
     {
-        accessorKey: 'date',
+        accessorKey: 'createdAt',
         header: ({ column }) => {
             return (
                 <button
@@ -165,8 +158,9 @@ export const columns: ColumnDef<ITable>[] = [
             )
         },
         cell: ({ row }) =>
+            
         <div className='flex items-start w-24'>
-            {row.getValue('date')}
+            {new Date(row.original.createdAt).toLocaleDateString()}
         </div>,
     },
     {

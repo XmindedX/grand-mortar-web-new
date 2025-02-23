@@ -1,19 +1,10 @@
-'use client'
 
 import { columns, ITable } from '@/components/custom/table/columns-pesanan'
 import { DataTable } from '@/components/custom/table/data-table'
 import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from '@/components/ui/popover'
-import { format } from 'date-fns'
 import { FaFileExport } from "react-icons/fa6";
-import { CalendarCheck, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
 
 import React from "react";
 
@@ -22,276 +13,27 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-const page = () => {
+import { db } from '@/database/drizzle'
+import { orders } from '@/database/schema'
 
-  const [date, setDate] = useState<Date>()
-  const [mainDate, setMainDate] = useState<Date>()
+const page = async () => {
+  const ordersList = await db.select().from(orders)
 
-const data: ITable[] = [
-        {
-            id: '200257',
-            pembeli: {
-                image: '/images/avatar.svg',
-                name: 'Jerome Bell',
-            },
-            sales_id: '#200257',
-            category: 'Rp 1.000.000',
-            location: 'Rp 0',
-            date: 'Mar 31, 2024',
-            status: 'Lunas',
-        },
-        {
-            id: '#526587',
-            pembeli: {
-                image: '/images/avatar-two.svg',
-                name: 'Victoria Alonso',
-            },
-            sales_id: '#526587',
-            category: 'Rp 1.000.000',
-            location: 'Rp 1.000.000',
-            date: 'Mar 29, 2024',
-            status: 'Belum Lunas',
-        },
-        {
-            id: '#696589',
-            pembeli: {
-                image: '/images/avatar-three.svg',
-                name: 'Arlene McCoy',
-            },
-            sales_id: '#696589',
-            category: 'Rp 1.000.000',
-            location: 'Rp 1.000.000',
-            date: 'Mar 20, 2024',
-            status: 'Belum Lunas',
-        },
-        {
-            id: '#256584',
-            pembeli: {
-                image: '/images/avatar-four.svg',
-                name: 'Grace Hopper',
-            },
-            sales_id: '#256584',
-            category: 'Rp 1.000.000',
-            location: 'Rp 1.000.000',
-            date: 'Feb 20, 2024',
-            status: 'Belum Lunas',
-        },
-        {
-            id: '#105986',
-            pembeli: {
-                image: '/images/avatar-six.svg',
-                name: 'Darrell Steward',
-            },
-            sales_id: '#105986',
-            category: 'Rp 1.000.000',
-            location: 'Rp 0',
-            date: 'Feb 16, 2024',
-            status: 'Lunas',
-        },
-        {
-            id: '#526534',
-            pembeli: {
-                image: '/images/avatar-seven.svg',
-                name: 'Elizabeth Feinler',
-            },
-            sales_id: '#526534',
-            category: 'Rp 1.000.000',
-            location: 'Rp 1.000.000',
-            date: 'Jan 28, 2024',
-            status: 'Belum Lunas',
-        },
-        {
-            id: '#526584',
-            pembeli: {
-                image: '/images/avatar-eight.svg',
-                name: 'Courtney Henry',
-            },
-            sales_id: '#526584',
-            category: 'Rp 1.000.000',
-            location: 'Rp 1.000.000',
-            date: 'Jan 28, 2024',
-            status: 'Belum Lunas',
-        },
-        {
-            id: '#526589',
-            pembeli: {
-                image: '/images/avatar-nine.svg',
-                name: 'Radia Perlman',
-            },
-            sales_id: '#526589',
-            category: 'Rp 1.000.000',
-            location: 'Rp 1.000.000',
-            date: 'Jan 22, 2024',
-            status: 'Belum Lunas',
-        },
-        {
-            id: '#526587',
-            pembeli: {
-                image: '/images/avatar-ten.svg',
-                name: 'Jane Cooper',
-            },
-            sales_id: '#526587',
-            category: 'Rp 1.000.000',
-            location: 'Rp 0',
-            date: 'Jan 18, 2013',
-            status: 'Lunas',
-        },
-        {
-            id: '#200257',
-            pembeli: {
-                image: '/images/avatar-eleven.svg',
-                name: 'Barbara Liskov',
-            },
-            sales_id: '#200257',
-            category: 'Rp 1.000.000',
-            location: 'Rp 0',
-            date: 'Jan 7, 2024',
-            status: 'Lunas',
-        },
-        {
-            id: '#200287',
-            pembeli: {
-                image: '/images/avatar-eleven.svg',
-                name: 'Barbara Liskov',
-            },
-            sales_id: '#200257',
-            category: 'Rp 1.000.000',
-            location: 'Rp 0',
-            date: 'Jan 7, 2024',
-            status: 'Lunas',
-        },
-        {
-          id: '200257',
-          pembeli: {
-              image: '/images/avatar.svg',
-              name: 'Jerome Bell',
-          },
-          sales_id: '#200257',
-          category: 'Rp 1.000.000',
-          location: 'Rp 0',
-          date: 'Mar 31, 2024',
-          status: 'Lunas',
-      },
-      {
-          id: '#526587',
-          pembeli: {
-              image: '/images/avatar-two.svg',
-              name: 'Victoria Alonso',
-          },
-          sales_id: '#526587',
-          category: 'Rp 1.000.000',
-          location: 'Rp 1.000.000',
-          date: 'Mar 29, 2024',
-          status: 'Belum Lunas',
-      },
-      {
-          id: '#696589',
-          pembeli: {
-              image: '/images/avatar-three.svg',
-              name: 'Arlene McCoy',
-          },
-          sales_id: '#696589',
-          category: 'Rp 1.000.000',
-          location: 'Rp 1.000.000',
-          date: 'Mar 20, 2024',
-          status: 'Belum Lunas',
-      },
-      {
-          id: '#256584',
-          pembeli: {
-              image: '/images/avatar-four.svg',
-              name: 'Grace Hopper',
-          },
-          sales_id: '#256584',
-          category: 'Rp 1.000.000',
-          location: 'Rp 1.000.000',
-          date: 'Feb 20, 2024',
-          status: 'Belum Lunas',
-      },
-      {
-          id: '#105986',
-          pembeli: {
-              image: '/images/avatar-six.svg',
-              name: 'Darrell Steward',
-          },
-          sales_id: '#105986',
-          category: 'Rp 1.000.000',
-          location: 'Rp 0',
-          date: 'Feb 16, 2024',
-          status: 'Lunas',
-      },
-      {
-          id: '#526534',
-          pembeli: {
-              image: '/images/avatar-seven.svg',
-              name: 'Elizabeth Feinler',
-          },
-          sales_id: '#526534',
-          category: 'Rp 1.000.000',
-          location: 'Rp 1.000.000',
-          date: 'Jan 28, 2024',
-          status: 'Belum Lunas',
-      },
-      {
-          id: '#526584',
-          pembeli: {
-              image: '/images/avatar-eight.svg',
-              name: 'Courtney Henry',
-          },
-          sales_id: '#526584',
-          category: 'Rp 1.000.000',
-          location: 'Rp 1.000.000',
-          date: 'Jan 28, 2024',
-          status: 'Belum Lunas',
-      },
-      {
-          id: '#526589',
-          pembeli: {
-              image: '/images/avatar-nine.svg',
-              name: 'Radia Perlman',
-          },
-          sales_id: '#526589',
-          category: 'Rp 1.000.000',
-          location: 'Rp 1.000.000',
-          date: 'Jan 22, 2024',
-          status: 'Belum Lunas',
-      },
-      {
-          id: '#526587',
-          pembeli: {
-              image: '/images/avatar-ten.svg',
-              name: 'Jane Cooper',
-          },
-          sales_id: '#526587',
-          category: 'Rp 1.000.000',
-          location: 'Rp 0',
-          date: 'Jan 18, 2013',
-          status: 'Lunas',
-      },
-      {
-          id: '#200257',
-          pembeli: {
-              image: '/images/avatar-eleven.svg',
-              name: 'Barbara Liskov',
-          },
-          sales_id: '#200257',
-          category: 'Rp 1.000.000',
-          location: 'Rp 0',
-          date: 'Jan 7, 2024',
-          status: 'Lunas',
-      },
-      {
-          id: '#200287',
-          pembeli: {
-              image: '/images/avatar-eleven.svg',
-              name: 'Barbara Liskov',
-          },
-          sales_id: '#200257',
-          category: 'Rp 1.000.000',
-          location: 'Rp 0',
-          date: 'Jan 7, 2024',
-          status: 'Lunas',
-      },
+    const data: ITable[] = [
+        ...ordersList.map((items) => ({
+            id: items.id,
+            customer: items.customer,
+            number: items.number,
+            email: items.email,
+            address: items.address,
+            city: items.city,
+            province: items.province,
+            postalCode: items.postalCode,
+            status: items.status,
+            total: items.total,
+            piutang: items.piutang,
+            createdAt: items.createdAt as Date,
+          })),
     ]
 
   return (
@@ -331,8 +73,7 @@ const data: ITable[] = [
                         </Link>
                     </div>
                 </div>
-
-                <DataTable columns={columns} data={data} filterField="name"/>
+                <DataTable columns={columns} data={data} filterField="customer"/>
             </div>
         </div>
     </>
