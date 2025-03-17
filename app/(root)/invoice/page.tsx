@@ -60,7 +60,7 @@ const page = async () => {
                             size ={'sm'}
                             >
                                 <FaFileExport />
-                                Export
+                                Buat Receipt
                             </Button>
                         </Link>
                         <Link href="/daftar-pesanan/new">

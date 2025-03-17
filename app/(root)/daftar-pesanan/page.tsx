@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { FaFileExport } from "react-icons/fa6";
 import { Plus } from 'lucide-react'
 import Link from 'next/link'
-
+import ExportButton from "@/components/custom/ExportButton";
 import React from "react";
 
 import { Separator } from "@/components/ui/separator"
@@ -54,13 +54,7 @@ const page = async () => {
                     </div>
                         <div className="flex items-center gap-2.5">
                         <Link href="/" target="_blank">
-                            <Button
-                            variant={'default'}
-                            size ={'sm'}
-                            >
-                                <FaFileExport />
-                                Export
-                            </Button>
+                            <ExportButton data={data} />
                         </Link>
                         <Link href="/daftar-pesanan/new">
                             <Button

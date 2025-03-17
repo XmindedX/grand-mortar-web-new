@@ -2,13 +2,11 @@
 
 import { useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
-import { MoveDown, MoveUp } from "lucide-react"
+import { MoveDown, MoveUp, Trash2 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-
-
 
 export type ITable = {
     id: string;
@@ -205,7 +203,32 @@ export const columns: ColumnDef<ITable>[] = [
         id: "actions",
         header: "Action",
         cell: ({ row }) => {
-            const [open, setOpen] = useState(false)
+            const [open, setOpen] = useState(false);
+
+            const handleDelete = async (id: string) => {
+                if (!confirm("Apakah Anda yakin ingin menghapus transaksi ini?")) return;
+            
+                try {
+                    const response = await fetch(`/api/transactions/${id}`, {
+                        method: "DELETE",
+                    });
+            
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || "Gagal menghapus transaksi");
+            
+                    alert("Transaksi berhasil dihapus");
+                    window.location.reload();
+                } catch (error) {
+                    if (error instanceof Error) {
+                        alert("Error: " + error.message);
+                    } else {
+                        alert("Terjadi kesalahan yang tidak diketahui");
+                    }
+                }
+            };
+            
+            
+
             return (
                 <div className="flex gap-2">
                     <Dialog open={open} onOpenChange={setOpen}>
@@ -247,8 +270,13 @@ export const columns: ColumnDef<ITable>[] = [
                     <Button variant="default" className="h-6 flex-1" onClick={() => window.location.href = `/receipt/new/${row.original.id}`}>
                         Buat Receipt
                     </Button>
+                    
+                    <Button variant="destructive" className="h-6 flex-1" onClick={() => handleDelete(row.original.id)}>
+                        <Trash2 className="size-4" />
+                    </Button>
+
                 </div>
-            )
+            );
         },
     },
-]    
+];

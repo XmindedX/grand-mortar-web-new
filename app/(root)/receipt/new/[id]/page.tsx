@@ -1,4 +1,3 @@
-
 import { db } from '@/database/drizzle'
 import { orders, orderItems, products } from '@/database/schema'
 import { eq } from 'drizzle-orm'
@@ -35,13 +34,13 @@ const CreateReceipt = async ({ params }: { params: { id: string } }) => {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <h1 className="text-3xl font-bold text-center text-gray-800">Buat Receipt untuk Order #{order.trxId}</h1>
-      
+
       <div className="grid md:grid-cols-2 gap-8">
         {/* Order Summary */}
         <div className="bg-white shadow-md p-6 rounded-lg border">
           <h2 className="text-xl font-semibold mb-4 border-b pb-2">Detail Order</h2>
           <h3 className="mb-5 text-gray-700 font-medium">Customer: {order.customer || 'Unknown'}</h3>
-          
+
           <div className="space-y-4 mb-6">
             {items.map(item => (
               <div key={item.id} className="flex justify-between items-center border-b pb-2">
@@ -53,7 +52,7 @@ const CreateReceipt = async ({ params }: { params: { id: string } }) => {
               </div>
             ))}
           </div>
-          
+
           <div className="pt-4 border-t font-semibold text-gray-800">
             <div className="flex justify-between">
               <span>Total:</span>

@@ -53,7 +53,7 @@ const page = async () => {
                         </div>
                     </div>
                     <div className="p-4 bg-gray-100 rounded-lg">
-                        <p className="text-lg font-semibold">Total Produk: {totalProduk}</p>
+                        <p className="text-lg font-semibold hidden">Total Produk: {totalProduk}</p>
                     </div>
                     <DataTable columns={columns} data={data} filterField="title"/>
                 </div>
