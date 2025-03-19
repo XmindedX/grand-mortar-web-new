@@ -54,13 +54,10 @@ const page = async () => {
                         <div id="search-table"></div>
                     </div>
                     <div className="flex items-center gap-2.5">
-                        <Link href="/" target="_blank">
-                            <Button
-                            variant={'default'}
-                            size ={'sm'}
-                            >
+                    <Link href={`/receipt/new/many?ids=${data.map(order => order.id).join(",")}`}>
+                            <Button variant={'default'} size={'sm'}>
                                 <FaFileExport />
-                                Buat Receipt
+                                Buat Multi Receipt
                             </Button>
                         </Link>
                         <Link href="/daftar-pesanan/new">
